@@ -187,5 +187,3 @@ Imagine you have a VPC with a public subnet hosting a web server and a private s
 - Each packet is evaluated independently without considering any prior packets or connections.
 - You need to define both inbound and outbound rules explicitly. A response packet must match an outbound rule to be allowed, regardless of the inbound rules.
 - If you have an inbound rule in a Network ACL allowing HTTP requests, you must also have a corresponding outbound rule to allow HTTP responses. Without the outbound rule, the responses won't be allowed through, even though the inbound requests were permitted.
-
-## Why are they different?

@@ -16,6 +16,14 @@ Inside a playground, you might have a sandbox, a swing set, and a slide. These a
 
 When you "segment your VPC's IP address range into smaller blocks," you're essentially dividing the park into these smaller areas (subnets), each with its own specific range of addresses.
 
+# Visualization
+
+Some notes to not get confused, the visualization in Excalidraw was a quick one to show how it's setup:
+
+- NACLs can be associated with multiple subnets. So if they have the same rules, it's redundant to create multiple NACLs.
+- An ec2 instance can be attached to multiple security groups. So you could have one security group and multiple instances attached to it.
+- `us-west-2b` wasn't implemented in the code, that's just to demonstrate if you had multiple subnets, you would typically have them in different availability zones.
+
 # VPC
 
 A VPC is a virtual network dedicated to your AWS account, isolated from other virtual networks in the AWS cloud. It's where you launch AWS resources, like EC2 instances. It provides control over your virtual networking environment, including IP address ranges, subnets, route tables, and network gateways.

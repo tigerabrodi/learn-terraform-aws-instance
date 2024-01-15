@@ -20,6 +20,18 @@ When you "segment your VPC's IP address range into smaller blocks," you're essen
 
 A VPC is a virtual network dedicated to your AWS account, isolated from other virtual networks in the AWS cloud. It's where you launch AWS resources, like EC2 instances. It provides control over your virtual networking environment, including IP address ranges, subnets, route tables, and network gateways.
 
+## When to use it?
+
+1. **You Want Your Own Private Space in the Cloud**: A VPC is like having a piece of the cloud all to yourself. You can set it up the way you want, just like your own private section of the internet.
+
+2. **Keeping Things Safe and Secure**: If you want to make sure only the people or systems you choose can access your cloud resources, a VPC helps you do that. It's like putting a fence around your cloud resources.
+
+3. **Running Different Projects or Stages**: If you have different projects or stages like testing and final versions, a VPC helps keep them separate and organized.
+
+4. **Meeting Special Rules for Your Data**: Sometimes, there are special rules about how and where you can store and handle data, especially if it's sensitive information. A VPC can help meet those rules.
+
+5. **Connecting the Cloud to Your Own Network**: If you need to connect your cloud resources to your company's network, a VPC can be set up to do this smoothly.
+
 # Internet Gateway
 
 The Internet Gateway serves as a bridge between your VPC and the internet. It allows communication between instances in your VPC and the outside world. It's essential for any resources in your VPC that need to interact with the internet, either to send outbound traffic or receive inbound traffic.
@@ -187,3 +199,9 @@ Imagine you have a VPC with a public subnet hosting a web server and a private s
 - Each packet is evaluated independently without considering any prior packets or connections.
 - You need to define both inbound and outbound rules explicitly. A response packet must match an outbound rule to be allowed, regardless of the inbound rules.
 - If you have an inbound rule in a Network ACL allowing HTTP requests, you must also have a corresponding outbound rule to allow HTTP responses. Without the outbound rule, the responses won't be allowed through, even though the inbound requests were permitted.
+
+## Positioning
+
+NACLs are associated with a subnet, but it's more accurate to think of them as acting within the subnet rather than being in front of it. They control the traffic flowing into and out of the subnet. NACLs apply their set of rules to all the traffic entering or exiting the subnet.
+
+Security Groups are applied directly to individual instances, such as EC2 instances. They act like a firewall at the instance level, controlling what traffic is allowed to reach the instance and what traffic can leave it.

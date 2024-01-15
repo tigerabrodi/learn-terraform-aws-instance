@@ -1,13 +1,3 @@
-
-variable "instance_name" {
-  description = "The name of the EC2 instance"
-  type        = string
-  default     = "ExampleAppServerInstance"
-}
-
-variable "vpc_name" {
-  description = "The name of the VPC"
-  type        = string
-  default     = "ExampleVPC"
-
-}
+# When you've modules, variables.tf in the root would either be:
+# Global variables that are used in multiple modules
+# Variables that are passed into modules

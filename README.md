@@ -69,3 +69,55 @@ CIDR also involves routing. Routing is the process of directing data (IP packets
 # Terraform taint
 
 If you need to mark a resource as tainted, you can use the terraform taint command. This means that the next time you run terraform apply, the resource will be destroyed and recreated.
+
+# Security Groups
+
+Imagine your AWS Virtual Private Cloud (VPC) as an exclusive club in the cloud city. Within this club (VPC), you have different rooms (subnets), each hosting different types of events or services. Now, to keep these rooms safe and ensure only the right guests (traffic) get in, you have bouncers at the door of each room. These bouncers are your AWS Security Groups.
+
+## What are Security Groups?
+
+- **Definition**: Security Groups in AWS are like virtual bouncers or firewalls that control the inbound and outbound traffic for your instances (like servers or services).
+- **Purpose**: Their main job is to ensure that only the traffic you want can get in or out of your instances.
+
+## How Do They Work?
+
+1. **Rules**: Each Security Group works by having a set of rules. These rules are like a list the bouncer has, detailing who's allowed in and who's allowed out.
+
+   - **Inbound Rules**: Determine who can enter (which incoming network requests can be accepted).
+   - **Outbound Rules**: Decide who can leave (which outgoing network requests can be made).
+
+2. **Assignment**: You can assign a Security Group to multiple instances within your AWS VPC. However, an instance can be associated with multiple Security Groups.
+
+3. **Default Settings**: By default, a new Security Group allows no inbound traffic (no one gets in) and allows all outbound traffic (everyone can leave).
+
+## Their Role in VPC and Subnets
+
+- **Within VPC**: In your AWS VPC, Security Groups act as the first line of defense for your instances. They ensure that only authorized network traffic as per your rules can access these instances.
+- **Across Subnets**: Even if you have different subnets for different purposes (like one for your web servers and another for your database), Security Groups help in managing traffic within these subnets. They can be configured to allow specific traffic between these subnets, maintaining both connectivity and security.
+
+## Key Points to Remember
+
+1. **Stateful Nature**: If an instance in your VPC sends a request, the response to this request is allowed back in, regardless of inbound rules. This is because Security Groups are stateful - they remember and allow return traffic automatically.
+2. **Instance Level Security**: Unlike Network Access Control Lists (NACLs) that operate at the subnet level, Security Groups provide security at the instance level.
+3. **No 'Deny' Rules**: Security Groups only have 'allow' rules. If there’s no rule that explicitly allows a type of traffic, it’s automatically denied.
+
+## Analogy Recap
+
+- **VPC**: The club.
+- **Subnets**: Different rooms in the club.
+- **Security Groups**: Bouncers at the doors of each room, controlling who gets in and out based on the guest list (rules).
+
+# Network Access Control Lists (NACLs)
+
+- **Subnet Level**: NACLs function at the subnet level within a VPC.
+- **Functionality**:
+  - They act as a firewall for controlling traffic entering and leaving the subnet.
+  - NACLs evaluate traffic attempting to enter or leave any instance within the subnet.
+- **Stateless**: NACLs are stateless, meaning they treat each packet separately. Inbound and outbound traffic rules must be explicitly defined. For instance, if you allow inbound HTTP traffic, you must also explicitly allow outbound HTTP responses.
+- **Rule-Based**: NACLs use numbered rules to determine whether to allow or deny traffic. The lower the number, the higher the priority.
+- **Default Settings**: By default, a new NACL allows all inbound and outbound traffic until rules are applied to restrict traffic.
+
+### Relationship in VPC Architecture
+
+- **Layered Security**: Using both NACLs and Security Groups provides layered security within your AWS infrastructure. NACLs provide a broad level of control at the subnet level, while Security Groups offer granular control at the instance level.
+- **Complementary**: Both work in complement to each other. While NACLs serve as a first line of defense at the subnet level, Security Groups provide a more finely tuned form of security at the instance level.

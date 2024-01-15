@@ -207,3 +207,7 @@ NACLs are associated with a subnet, but it's more accurate to think of them as a
 NACLs are not literally "in front" of the subnet in a physical sense but are an integral part of the subnet's traffic control mechanism.
 
 Security Groups are applied directly to individual instances, such as EC2 instances. They act like a firewall at the instance level, controlling what traffic is allowed to reach the instance and what traffic can leave it.
+
+# Elastic Load Balancer (ELB)
+
+An ELB automatically distributes incoming application traffic across multiple targets, such as Amazon EC2 instances, in AWS. It improves the availability and scalability of your application by handling the traffic distribution, which ensures no single instance is overwhelmed. ELBs are often used to increase fault tolerance in applications, allowing for seamless redirection of traffic in case of instance failure or high load.

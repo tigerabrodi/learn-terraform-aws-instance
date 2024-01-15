@@ -4,3 +4,10 @@ variable "instance_name" {
   type        = string
   default     = "ExampleAppServerInstance"
 }
+
+variable "vpc_name" {
+  description = "The name of the VPC"
+  type        = string
+  default     = "ExampleVPC"
+
+}

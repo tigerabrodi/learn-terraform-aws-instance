@@ -57,3 +57,11 @@ Subnets are carved out of the VPC's CIDR block. For example, a subnet with a CID
 VPC -> Subnet -> Instance.
 
 EC2 instance resides in a subnet, which is part of your VPC. The subnet's CIDR block determines the IP address range available to instances within it.
+
+# What and why IP addresses?
+
+CIDR blocks provide a way to allocate and manage IP addresses in a network. Each block represents a range of IP addresses.
+
+An IP address within a CIDR block is like a specific address (like a house number in a street). In networking, each device or resource (like an EC2 instance or a database in AWS) needs an IP address to communicate with other devices.
+
+CIDR also involves routing. Routing is the process of directing data (IP packets) across a network. CIDR blocks help in defining routes by grouping addresses together, making it easier to direct traffic.

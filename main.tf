@@ -1,4 +1,5 @@
 terraform {
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -11,12 +12,6 @@ terraform {
 
 provider "aws" {
   region = "us-west-2"
-}
-
-variable "instance_name" {
-  description = "The name of the EC2 instance"
-  type        = string
-  default     = "ExampleAppServerInstance"
 }
 
 resource "aws_instance" "app_server" {

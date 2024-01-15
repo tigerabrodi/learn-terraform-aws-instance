@@ -24,6 +24,18 @@ Some notes to not get confused, the visualization in Excalidraw was a quick one 
 - An ec2 instance can be attached to multiple security groups. So you could have one security group and multiple instances attached to it.
 - `us-west-2b` wasn't implemented in the code, that's just to demonstrate if you had multiple subnets, you would typically have them in different availability zones.
 
+# How could I improve this?
+
+In a real world scenario if we were using ec2 instances like this, you would probably want to have an Auto Scaling Group. It is a service designed to automatically adjust the number of EC2 instances in your application's deployment. It ensures that you have the correct number of Amazon EC2 instances available to handle the load for your application.
+
+So you can scale out or scale in the amount of EC2 instances you have based on the load of your application. Scale out to your needs, and scale in to save costs. In case of a disaster, ASGs allow for rapid scaling up in an alternate region to ensure business continuity.
+
+- **Improved Fault Tolerance:** ASGs automatically replace failed instances, reducing the risk of application downtime.
+- **Better Resource Utilization:** By adjusting the number of instances, ASGs ensure that you're utilizing resources efficiently, without underutilization or overprovisioning.
+- **Scalability:** ASGs allow your application to scale without manual intervention, making it easier to handle growth in demand.
+- **Cost Control:** By automatically scaling down when fewer resources are needed, you can control costs more effectively.
+- **Automated Management:** ASGs handle the task of instance management for you, freeing
+
 # VPC
 
 A VPC is a virtual network dedicated to your AWS account, isolated from other virtual networks in the AWS cloud. It's where you launch AWS resources, like EC2 instances. It provides control over your virtual networking environment, including IP address ranges, subnets, route tables, and network gateways.

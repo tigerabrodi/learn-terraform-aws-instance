@@ -65,3 +65,7 @@ CIDR blocks provide a way to allocate and manage IP addresses in a network. Each
 An IP address within a CIDR block is like a specific address (like a house number in a street). In networking, each device or resource (like an EC2 instance or a database in AWS) needs an IP address to communicate with other devices.
 
 CIDR also involves routing. Routing is the process of directing data (IP packets) across a network. CIDR blocks help in defining routes by grouping addresses together, making it easier to direct traffic.
+
+# Terraform taint
+
+If you need to mark a resource as tainted, you can use the terraform taint command. This means that the next time you run terraform apply, the resource will be destroyed and recreated.

@@ -117,7 +117,75 @@ Imagine your AWS Virtual Private Cloud (VPC) as an exclusive club in the cloud c
 - **Rule-Based**: NACLs use numbered rules to determine whether to allow or deny traffic. The lower the number, the higher the priority.
 - **Default Settings**: By default, a new NACL allows all inbound and outbound traffic until rules are applied to restrict traffic.
 
-### Relationship in VPC Architecture
+## Relationship in VPC Architecture
 
 - **Layered Security**: Using both NACLs and Security Groups provides layered security within your AWS infrastructure. NACLs provide a broad level of control at the subnet level, while Security Groups offer granular control at the instance level.
 - **Complementary**: Both work in complement to each other. While NACLs serve as a first line of defense at the subnet level, Security Groups provide a more finely tuned form of security at the instance level.
+
+# Stateless vs Stateful (NACLs vs Security Groups)
+
+## NACLs
+
+Network ACLs are stateless, meaning they do not keep track of the state of network connections. Each packet passing through an ACL is evaluated independently, without considering any previous packet, even if it's part of the same connection.
+
+### Rules
+
+Network ACLs contain a list of rules, and each rule is assigned a unique number (e.g., 100, 200, 300, and so on).
+
+These numbers determine the order in which the rules are evaluated. Rules with lower numbers are evaluated before those with higher numbers.
+
+### Rules evaluation
+
+When network traffic attempts to enter or exit a subnet, the Network ACL evaluates this traffic against its list of rules to decide whether to allow or deny the traffic.
+
+A "packet" refers to a unit of data being transmitted. Each packet has attributes like protocol (TCP, UDP, etc.), source IP address, destination IP address, source port, and destination port.
+
+The ACL rules define criteria based on these attributes. For example, a rule might allow TCP traffic from source IP 203.0.113.5 to destination port 80.
+
+### First rule that matches
+
+The first rule in the list that matches the attributes of the traffic (like protocol, source IP, etc.) determines the action (allow or deny).
+
+If a packet matches a rule, the ACL takes the corresponding action immediately, without evaluating the rest of the rules.
+
+If no rule matches, the default action is to deny the traffic, as Network ACLs have an implicit deny rule at the end.
+
+### Example
+
+Suppose you have the following rules in a Network ACL:
+
+- Rule #100: Allow TCP traffic on port 80 (HTTP) from any source.
+- Rule #200: Deny all TCP traffic from IP address 192.0.2.1.
+
+If an HTTP request arrives from IP address 192.0.2.1, it first hits Rule #100, which matches because it's HTTP traffic on port 80. The packet is allowed, and Rule #200 is not evaluated for this packet. If non-HTTP traffic arrives from 192.0.2.1, it doesn't match Rule #100 and goes to Rule #200, where it's denied.
+
+## Security Groups
+
+Security Groups are stateful, meaning that they automatically allow return traffic for allowed inbound traffic, and vice versa for outbound traffic. This means if an inbound rule allows traffic, the response traffic for that session is automatically allowed, regardless of outbound rules.
+
+## Example
+
+Imagine you have a VPC with a public subnet hosting a web server and a private subnet with a database server. You would use both Network ACLs and Security Groups to secure these resources:
+
+- **Network ACL for Public Subnet**: You might configure the Network ACL to allow inbound HTTP and HTTPS traffic (ports 80 and 443) to reach the web server and deny all inbound traffic to the private subnet. For outbound, you might allow responses to HTTP/HTTPS requests and essential outbound traffic like DNS queries. Because ACLs are stateless, you need to explicitly allow both inbound and outbound traffic.
+
+- **Network ACL for Private Subnet**: This could be configured to deny all inbound traffic from outside the VPC and only allow traffic from the public subnet (where the web server is) on specific ports required for database access. Outbound rules might be set to allow traffic to the public subnet and essential services like updates.
+
+- **Security Group for Web Server**: A Security Group attached to the web server EC2 instance might allow inbound HTTP and HTTPS traffic and any other necessary services like SSH. It would allow outbound traffic as needed. Due to its stateful nature, return traffic for allowed inbound connections is automatically permitted.
+
+- **Security Group for Database Server**: This Security Group might only allow inbound traffic on the database port from the web server's Security Group, ensuring that only the web server can communicate with the database.
+
+## Stateful vs Stateless clarified
+
+**Stateful:** The system remembers the state of previous network connections or packets.
+
+- When a request is allowed through a security group (inbound rule), the response to that request is automatically allowed, regardless of outbound rules.
+- If an inbound rule allows HTTP traffic (port 80) to an EC2 instance, the outbound responses to those HTTP requests are automatically allowed, even if there's no specific outbound rule for HTTP. Even if you deny all outbound traffic, the responses to allowed inbound traffic are still allowed to exit.
+
+**Stateless:** The system does not retain any memory of previous network connections or packets.
+
+- Each packet is evaluated independently without considering any prior packets or connections.
+- You need to define both inbound and outbound rules explicitly. A response packet must match an outbound rule to be allowed, regardless of the inbound rules.
+- If you have an inbound rule in a Network ACL allowing HTTP requests, you must also have a corresponding outbound rule to allow HTTP responses. Without the outbound rule, the responses won't be allowed through, even though the inbound requests were permitted.
+
+## Why are they different?

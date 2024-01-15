@@ -204,4 +204,6 @@ Imagine you have a VPC with a public subnet hosting a web server and a private s
 
 NACLs are associated with a subnet, but it's more accurate to think of them as acting within the subnet rather than being in front of it. They control the traffic flowing into and out of the subnet. NACLs apply their set of rules to all the traffic entering or exiting the subnet.
 
+NACLs are not literally "in front" of the subnet in a physical sense but are an integral part of the subnet's traffic control mechanism.
+
 Security Groups are applied directly to individual instances, such as EC2 instances. They act like a firewall at the instance level, controlling what traffic is allowed to reach the instance and what traffic can leave it.

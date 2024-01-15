@@ -18,6 +18,8 @@ When you "segment your VPC's IP address range into smaller blocks," you're essen
 
 # Visualization
 
+![Screenshot 2024-01-15 at 20 16 36](https://github.com/narutosstudent/learn-terraform-aws-instance/assets/49603590/c6afb4a4-4cdd-4751-bdc7-aa5f32fe3440)
+
 Some notes to not get confused, the visualization in Excalidraw was a quick one to show how it's setup:
 
 - NACLs can be associated with multiple subnets. So if they have the same rules, it's redundant to create multiple NACLs.

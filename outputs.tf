@@ -22,3 +22,8 @@ output "subnet_id" {
   description = "The ID of the subnet"
   value       = aws_subnet.example_subnet.id
 }
+
+output "security_group_name" {
+  description = "The name of the security group"
+  value       = aws_security_group.app_server_sg.name
+}

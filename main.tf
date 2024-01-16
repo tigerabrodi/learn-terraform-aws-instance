@@ -1,9 +1,9 @@
 terraform {
 
   cloud {
-    organization = "tiger_projects"
+    organization = "{your-organization}"
     workspaces {
-      name = "learn-tfc-aws"
+      name = "{name-of-your-workspace}"
     }
   }
 
@@ -34,7 +34,7 @@ module "ec2" {
 module "elb" {
   source            = "./modules/elb"
   elb_name          = "my-example-elb"
-  subnet_ids        = [module.vpc.subnet_id] # Replace with actual subnet ID from VPC module
+  subnet_ids        = [module.vpc.subnet_id]
   security_group_id = module.ec2.security_group_id
   instance_ids      = [module.ec2.instance_id]
 }

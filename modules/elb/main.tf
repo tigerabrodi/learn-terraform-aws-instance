@@ -1,6 +1,6 @@
 resource "aws_elb" "example_elb" {
   name            = var.elb_name
-  subnets         = var.subnet_ids # Use subnets instead of availability_zones
+  subnets         = var.subnet_ids
   security_groups = [var.security_group_id]
 
   listener {
